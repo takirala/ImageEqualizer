@@ -29,10 +29,22 @@ object Equalizer {
 
     val executorId = ExecutorID.newBuilder.setValue("EqualizerExecutor-" + System.currentTimeMillis())
 
+    val memResource = Resource.newBuilder
+      .setName("mem")
+      .setType(Value.Type.SCALAR)
+      .setScalar(Value.Scalar.newBuilder.setValue(256))
+
+    val cpuResource = Resource.newBuilder
+      .setName("cpus")
+      .setType(Value.Type.SCALAR)
+      .setScalar(Value.Scalar.newBuilder.setValue(0.2))
+
     val executor = ExecutorInfo.newBuilder()
       .setCommand(executorCommand)
       .setExecutorId(executorId)
       .setName(name)
+      .addResources(memResource)
+      .addResources(cpuResource)
       .build()
 
     val scheduler = new EqualizerScheduler(executor, _srcImage, _maxBins, _memPerTask, _outputPrefix)

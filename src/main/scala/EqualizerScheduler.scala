@@ -123,8 +123,10 @@ class EqualizerScheduler(executor: ExecutorInfo, _srcImage: String = "unequalize
 
     if (_map.size == _maxBins) {
       // Done. Proceed further.
+      val beer =
+        """\uD83C\uDF7A \uD83C\uDF7A \uD83C\uDF7A \uD83C\uDF7A \uD83C\uDF7A \uD83C\uDF7A \uD83C\uDF7A"""
+      println(s"Almost there! $beer Writing the new image to a file")
       createRGBImage()
-      val beer = """\uD83C\uDF7A \uD83C\uDF7A \uD83C\uDF7A \uD83C\uDF7A \uD83C\uDF7A \uD83C\uDF7A"""
       val doneMessage =
         s"""
            |
@@ -142,8 +144,7 @@ class EqualizerScheduler(executor: ExecutorInfo, _srcImage: String = "unequalize
            |                            |  |   |  |                     \\_\\    /
            |                            '--'   '--'                      `''--'
          """.stripMargin
-      println(beer)
-      //println(doneMessage)
+      println(doneMessage)
       driver.stop()
     }
   }
@@ -157,12 +158,15 @@ class EqualizerScheduler(executor: ExecutorInfo, _srcImage: String = "unequalize
     val image = ImageIO.read(getClass.getResource(_srcImage))
     val w = image.getWidth()
     val h = image.getHeight()
+    println("Loaded Image")
     val rgbArray = image.getRGB(0, 0, w, h, null, 0, w)
+    println("Loaded rgb array")
     val hsbArray = rgbArray.map(x => {
       val c = new Color(x)
       Color.RGBtoHSB(c.getRed, c.getGreen, c.getBlue, null)
     }
     )
+    println("Converted to HSB Array")
 
     val binFreq = Array.fill(_maxBins)(0)
     _map.map(x => {
@@ -172,6 +176,7 @@ class EqualizerScheduler(executor: ExecutorInfo, _srcImage: String = "unequalize
       override def applyAsInt(left: Int, right: Int): Int = left + right
     }
     )
+    println("Calculating cumulative probability")
     val cumProb = Array.fill(_maxBins)(0.0f)
     for (i <- 0 until _maxBins) {
       cumProb(i) = binFreq(i).toFloat / hsbArray.length
@@ -182,7 +187,7 @@ class EqualizerScheduler(executor: ExecutorInfo, _srcImage: String = "unequalize
       val binIndex = (brightness * (_maxBins - 1)).toInt
       Color.HSBtoRGB(x(0), x(1), cumProb(binIndex))
     })
-
+    println("Writing to a file")
     val newImage = new BufferedImage(w, h, image.getType)
     val output = new File(_outputPrefix + _srcImage + ".output.jpg")
     newImage.setRGB(0, 0, image.getWidth(), image.getHeight(), newRgbArray, 0, image.getWidth())
