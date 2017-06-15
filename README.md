@@ -2,7 +2,7 @@
 
 ## The what and why.
 
-Wikipedia defines it as*Histogram equalization is a method in image processing of contrast adjustment using the image's histogram.*
+Wikipedia defines it as *Histogram equalization is a method in image processing of contrast adjustment using the image's histogram.*
 
 * This method usually increases the global contrast of many images, especially when the usable data of the image is represented by close contrast values. 
 * Through this adjustment, the intensities can be better distributed on the histogram. 
@@ -22,7 +22,7 @@ I am sure that didn't make much sense. In essence, this code helps convert the i
 * Any image is RGB
 * Convert to HSB
 * Collect the**B**values in to bins (Does the bin size matter?)
-* Calculate the frequency of each bin (Hence the name**Histogram**Equalization)
+* Calculate the frequency of each bin (Hence the name **Histogram** Equalization)
 * Calculate the cumulative probability of each bin
 * Over ride the corresponding **B** for the bin with its cumulative probability in the image
 * Convert back to RGB write the new image!
