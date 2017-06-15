@@ -16,7 +16,7 @@ import scala.collection.{immutable, mutable}
 /**
   * Created by takirala on 6/12/17.
   */
-class EqualizerScheduler(executor: ExecutorInfo, _srcImage: String = "unequalized.jpg", _maxBins: Int = 100, _memPerTask: Double = 256, _outputPrefix: String = "/vagrant/") extends Scheduler {
+class EqualizerScheduler(executor: ExecutorInfo, _srcImage: String = "unequalized1.jpg", _maxBins: Int = 100, _memPerTask: Double = 256, _outputPrefix: String = "/vagrant/") extends Scheduler {
 
   /**
     * TODO executorID mapping
@@ -87,7 +87,7 @@ class EqualizerScheduler(executor: ExecutorInfo, _srcImage: String = "unequalize
       println(s"Offer ${offer.getId.getValue}")
       //println(offer.toString)
       try {
-        implicit val MAX_TASKS = getMaxTasks(getCpuCount(offer), getTotalMem(offer))
+        val MAX_TASKS = getMaxTasks(getCpuCount(offer), getTotalMem(offer))
         val nextTask = getTasks(offer, MAX_TASKS)
         if (nextTask.nonEmpty) {
           println(s"Launching tasks ${nextTask.length}")
@@ -98,7 +98,7 @@ class EqualizerScheduler(executor: ExecutorInfo, _srcImage: String = "unequalize
         }
       } catch {
         case e: AssertionError =>
-          println(s"Declining offer as ${e.getMessage} there are not enough resources in ${offer.getResourcesList.asScala.filter(_.getName == "mem")}")
+          println(s"Declining offer as ${e.getMessage} there are not enough resources in ${offer.getResourcesList.asScala.filter(_.getName == "mem").toString()}")
           driver.declineOffer(offer.getId)
       }
     }
@@ -181,8 +181,7 @@ class EqualizerScheduler(executor: ExecutorInfo, _srcImage: String = "unequalize
       val brightness = x(2)
       val binIndex = (brightness * (_maxBins - 1)).toInt
       Color.HSBtoRGB(x(0), x(1), cumProb(binIndex))
-    }
-    )
+    })
 
     val newImage = new BufferedImage(w, h, image.getType)
     val output = new File(_outputPrefix + _srcImage + ".output.jpg")

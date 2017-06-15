@@ -12,7 +12,7 @@ import org.apache.mesos.{Executor, ExecutorDriver, MesosExecutorDriver, Protos}
   */
 object EqualizerExecutor extends Executor {
 
-  val fileName = "unequalized.jpg"
+  val fileName = "unequalized1.jpg"
   val poolSize = 50
 
   private var hsbArray = Array[Array[Float]]()

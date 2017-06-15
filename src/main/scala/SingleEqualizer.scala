@@ -10,8 +10,8 @@ import javax.imageio.ImageIO
   */
 object SingleEqualizer {
 
-  val srcImage = "unequalized.jpg"
-  val nBins = 100 //For precision.
+  val srcImage = "unequalized2.jpg"
+  val nBins = 10
 
   def main(args: Array[String]): Unit = {
     println("Working")

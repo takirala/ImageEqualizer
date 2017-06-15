@@ -17,7 +17,7 @@ object Equalizer {
 
     val mesosMaster = "192.168.65.90:5050"
 
-    val _srcImage = "unequalized.jpg"
+    val _srcImage = "unequalized1.jpg"
     val _outputPrefix = "/vagrant/"
     val _maxBins = 100
     val _memPerTask: Double = 256
