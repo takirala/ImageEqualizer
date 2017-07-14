@@ -14,7 +14,6 @@ I am sure that didn't make much sense. In essence, this code helps convert the i
 | Original Image | After Equalization (10 bins) | After Equalization (100 bins) |
 | --- | --- | --- |
 | ![Before](/src/main/resources/unequalized1.jpg)  | ![Before](/src/main/resources/unequalized1-10bins.jpg) | ![Before](/src/main/resources/unequalized1-100bins.jpg) |
-| ![Before](/src/main/resources/unequalized2.jpg)  | ![Before](/src/main/resources/unequalized2-10bins.jpg) | ![Before](/src/main/resources/unequalized2-100bins.jpg) |
 
 
 ## Okay, but how ?
